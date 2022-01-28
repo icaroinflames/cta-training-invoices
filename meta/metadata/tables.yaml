@@ -1,0 +1,45 @@
+- table:
+    schema: public
+    name: invoices
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: x-hasura-user-id
+      columns:
+      - total
+      - user_id
+      backend_only: false
+- table:
+    schema: public
+    name: user
+  insert_permissions:
+  - role: anonymous
+    permission:
+      check: {}
+      columns:
+      - email
+      - password
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - email
+      - user_id
+      filter:
+        user_id:
+          _eq: x-hasura-user-id
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - password
+      filter:
+        user_id:
+          _eq: x-hasura-user-id
+      check: null
+- table:
+    schema: public
+    name: user_info
