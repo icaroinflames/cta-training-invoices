@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { gql, useMutation} from '@apollo/client';
+import TextInput from './customInputs/TextInput';
 
 const MUTATION_REGISTER_USER = gql`
     mutation registerUser($email: String!, $password: String!) {
@@ -9,16 +10,14 @@ const MUTATION_REGISTER_USER = gql`
     }
 `;
 
-
-
-
-export default function UserRegister() {
+export default function UserRegister({tokenState, setTokenState}) {
 
   const [registerUser, {data, loading, error }] = useMutation(MUTATION_REGISTER_USER);
 
   const initialState = {
     email: '',
-    password: ''
+    password: '',
+    passwordValid: false
   }
 
   const [formState, setFormState] = useState(initialState)
@@ -29,28 +28,30 @@ export default function UserRegister() {
   const handleSubmit = event => {
 
     event.preventDefault();
+    if(formState.passwordValid){
+      registerUser({
+        variables: formState,
+      });
+  
+      console.log(data);
+  
+      setFormState(initialState)
+    }
 
-    registerUser({
-      variables: formState,
-    });
+  }
 
-    setFormState(initialState)
-
+  const isPasswordValid = (password2) => {
+    return formState.password.length > 5 && formState.password === password2;
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>
-          <span>Email</span>
-          <input value={formState.email} onChange={(e) => setFormState({ ...formState, email: e.target.value })} type="text"></input>
-        </label>
-        <label>
-          <span>Password</span>
-          <input value={formState.password} onChange={(e) => setFormState({ ...formState, password: e.target.value })} ></input>
-        </label>
+        <TextInput label='Email' onChange={(e) => setFormState({ ...formState, email: e.target.value })}/>
+        <TextInput label='Password' onChange={(e) => setFormState({ ...formState, password: e.target.value })}/>
+        <TextInput label='Repeat password' onChange={(e) => setFormState({...formState, passwordValid: isPasswordValid(e.target.value)})}/>
         <div>
-          <button type="submit">Save</button>
+          <button type="submit">Register</button>
         </div>
       </form>
     </div>

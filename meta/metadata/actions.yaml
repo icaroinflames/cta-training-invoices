@@ -1,6 +1,15 @@
-actions: []
+actions:
+- name: loginUser
+  definition:
+    kind: ""
+    handler: http://auth:4000/login
+  permissions:
+  - role: anonymous
+  comment: Login
 custom_types:
   enums: []
-  input_objects: []
-  objects: []
+  input_objects:
+  - name: SampleInput
+  objects:
+  - name: SampleOutput
   scalars: []

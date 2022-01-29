@@ -36,3 +36,16 @@ services:
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_DEV_MODE: "true"
 
+
+  auth:
+    build:
+      context: ./auth
+    volumes:
+      - ./auth:/usr/src/auth
+    ports:
+      - 4000:4000
+    environment:
+      NODE_ENV: development
+      HASURA_ENDPOINT: http://hasura:8080
+      HASURA_JWT_SECRET: ${HASURA_JWT_SECRET:-h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk}
+
