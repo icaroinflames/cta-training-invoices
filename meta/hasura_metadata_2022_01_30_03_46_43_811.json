@@ -1,0 +1,214 @@
+{
+  "resource_version": 32,
+  "metadata": {
+    "version": 3,
+    "sources": [
+      {
+        "name": "default",
+        "kind": "postgres",
+        "tables": [
+          {
+            "table": {
+              "schema": "public",
+              "name": "invoices"
+            },
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {
+                    "user_id": {
+                      "_eq": "x-hasura-user-id"
+                    }
+                  },
+                  "columns": [
+                    "total",
+                    "user_id"
+                  ],
+                  "backend_only": false
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "schema": "public",
+              "name": "user"
+            },
+            "insert_permissions": [
+              {
+                "role": "anonymous",
+                "permission": {
+                  "check": {},
+                  "columns": [
+                    "email",
+                    "password"
+                  ],
+                  "backend_only": false
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "email",
+                    "user_id"
+                  ],
+                  "filter": {
+                    "user_id": {
+                      "_eq": "x-hasura-user-id"
+                    }
+                  }
+                }
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "password"
+                  ],
+                  "filter": {
+                    "user_id": {
+                      "_eq": "x-hasura-user-id"
+                    }
+                  },
+                  "check": null
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "schema": "public",
+              "name": "user_info"
+            }
+          }
+        ],
+        "configuration": {
+          "connection_info": {
+            "use_prepared_statements": true,
+            "database_url": {
+              "from_env": "HASURA_GRAPHQL_DATABASE_URL"
+            },
+            "isolation_level": "read-committed",
+            "pool_settings": {
+              "connection_lifetime": 600,
+              "retries": 1,
+              "idle_timeout": 180,
+              "max_connections": 50
+            }
+          }
+        }
+      }
+    ],
+    "actions": [
+      {
+        "name": "echo",
+        "definition": {
+          "handler": "http://auth:4000/echo",
+          "output_type": "EchoOutput",
+          "arguments": [
+            {
+              "name": "arg1",
+              "type": "EchoInput!"
+            }
+          ],
+          "type": "query"
+        },
+        "comment": "echo"
+      },
+      {
+        "name": "loginUser",
+        "definition": {
+          "handler": "http://auth:4000/login",
+          "output_type": "SampleOutput",
+          "arguments": [
+            {
+              "name": "arg1",
+              "type": "SampleInput!"
+            }
+          ],
+          "type": "query"
+        },
+        "comment": "Login",
+        "permissions": [
+          {
+            "role": "anonymous"
+          }
+        ]
+      }
+    ],
+    "custom_types": {
+      "input_objects": [
+        {
+          "name": "SampleInput",
+          "fields": [
+            {
+              "name": "email",
+              "type": "String!"
+            },
+            {
+              "name": "password",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "EchoInput",
+          "fields": [
+            {
+              "name": "text",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "LoginInput",
+          "fields": [
+            {
+              "name": "email",
+              "type": "String!"
+            },
+            {
+              "name": "password",
+              "type": "String!"
+            }
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "name": "EchoOutput",
+          "fields": [
+            {
+              "name": "text",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "SampleOutput",
+          "fields": [
+            {
+              "name": "accessToken",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "LoginOutput",
+          "fields": [
+            {
+              "name": "accessToken",
+              "type": "String!"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
