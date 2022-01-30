@@ -1,5 +1,5 @@
 const echoHandler = (req, reply) => {
-    reply.send(req.body.input.text);
+    reply.send(req.body.text);
 }
 
 const echo = ({ registerAction }) => {
@@ -13,4 +13,4 @@ const echo = ({ registerAction }) => {
     });
   };
   
-  module.exports = login;
+  module.exports = echo;

@@ -43,9 +43,11 @@ services:
     volumes:
       - ./auth:/usr/src/auth
     ports:
-      - 4000:4000
+      - 4000:${FASTIFY_PORT:-4000}
     environment:
       NODE_ENV: development
       HASURA_ENDPOINT: http://hasura:8080
+      HASURA_ADMIN_SECRET: "${HASURA_ADMIN_SECRET:-hasura}"
       HASURA_JWT_SECRET: ${HASURA_JWT_SECRET:-h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk}
+      FASTIFY_PORT: ${FASTIFY_PORT:-4000}
 

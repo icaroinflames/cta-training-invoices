@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Link } from "react-router-dom";
 import { BrowserRouter,
   Routes,
   Route 
@@ -28,8 +27,6 @@ function App() {
             paddingBottom: "1rem"
           }}
         >
-          <Link to="/register">Register</Link>
-          <Link to="/login">Login</Link>
         </nav>
         <BrowserRouter>
           <Routes>

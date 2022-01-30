@@ -13,22 +13,22 @@ const loginHandler = async (request, reply) => {
   // Identify the user by querying Hasura
   const res = await request.apollo.query({
     query: getUserQuery,
-    variables: request.body.input
+    variables: request.body.input.arg1
   });
-
+  console.log(res.data);
   // If no match, return authorization error
-  if (!res.data.users.length) {
+  if (res.data.user.lenght === 0) {
     reply.code(401).send("User not found");
     return;
   }
 
   // Create Hasura user's token and send it back
-  const token = await request.jwt.sign(buildUserToken(res.data.users[0].id));
+  const accessToken = await request.jwt.sign(buildUserToken(res.data.user[0].id));
 
   reply.send({
     // id: res.data.users[0].id,
     // name: request.body.input.name,
-    token
+    accessToken
   });
 };
 

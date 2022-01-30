@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { gql, useMutation} from '@apollo/client';
+import { Link } from "react-router-dom";
+
 import TextInput from './customInputs/TextInput';
 
 const MUTATION_REGISTER_USER = gql`
@@ -12,18 +14,23 @@ const MUTATION_REGISTER_USER = gql`
 
 export default function UserRegister({tokenState, setTokenState}) {
 
-  const [registerUser, {data, loading, error }] = useMutation(MUTATION_REGISTER_USER);
-
   const initialState = {
     email: '',
     password: '',
     passwordValid: false
   }
 
-  const [formState, setFormState] = useState(initialState)
+  const [formState, setFormState] = useState(initialState);
+
+  const [registerUser, {data, loading, error }] = useMutation(MUTATION_REGISTER_USER);
 
   if (loading) return 'Submitting...';
   if (error) return `Submission error! ${error.message}`;
+
+  if(data && data.insert_user.affected_rows){
+    console.log(data);
+    //TODO redirigir a login
+  } 
 
   const handleSubmit = event => {
 
@@ -33,26 +40,38 @@ export default function UserRegister({tokenState, setTokenState}) {
         variables: formState,
       });
   
-      console.log(data);
-  
       setFormState(initialState)
     }
 
   }
 
-  const isPasswordValid = (password2) => {
-    return formState.password.length > 5 && formState.password === password2;
+  const onChangeEmail = (value) => {
+    setFormState({...formState,  email: value });
+    console.log(formState.email);
+  }
+
+  const onChangePassword = (value) => {
+    setFormState({...formState, password: value });
+  }
+
+  const onChangePassword2 = (value) => {
+    setFormState({...formState, passwordValid: isPasswordValid(value)});
+  }
+
+  const isPasswordValid = (value) => {
+    return (value.length > 5) && value === formState.password;
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <TextInput label='Email' onChange={(e) => setFormState({ ...formState, email: e.target.value })}/>
-        <TextInput label='Password' onChange={(e) => setFormState({ ...formState, password: e.target.value })}/>
-        <TextInput label='Repeat password' onChange={(e) => setFormState({...formState, passwordValid: isPasswordValid(e.target.value)})}/>
+        <TextInput label='Email' changeCallback={onChangeEmail}/>
+        <TextInput label='Password' changeCallback={onChangePassword}/>
+        <TextInput label='Repeat password' changeCallback={onChangePassword2}/>
         <div>
           <button type="submit">Register</button>
         </div>
+        <Link to="/login">Login</Link>
       </form>
     </div>
   )

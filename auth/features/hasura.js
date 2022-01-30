@@ -30,7 +30,7 @@
    endpoint = "",
    secret,
    expiresIn = "300y",
-   role = "backend",
+   role = "admin",
    roles = [],
    ...tokenConfig
  } = {}) => {

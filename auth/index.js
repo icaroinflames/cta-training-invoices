@@ -2,10 +2,12 @@ const { runHookApp } = require("@forrestjs/hooks");
 const serviceFastify = require("@forrestjs/service-fastify");
 const serviceApollo = require("@forrestjs/service-apollo");
 const serviceJwt = require("@forrestjs/service-jwt");
+const envalid = require("envalid");
 
 // App's Features & Utilities
-const login = require("./login");
-const { buildApolloConfig } = require("./hasura");
+const login = require("./features/login");
+const echo = require("./features/echo");
+const { buildApolloConfig } = require("./features/hasura");
 
 const validatedEnv = envalid.cleanEnv(process.env, {
     NODE_ENV: envalid.str({
@@ -20,6 +22,9 @@ const validatedEnv = envalid.cleanEnv(process.env, {
     HASURA_JWT_SECRET: envalid.str({
         desc: 'The salt for hasura jwt'
     }),
+    HASURA_ADMIN_SECRET: envalid.str({
+      desc: 'The hasura admin key'
+  }),
 });
 
 runHookApp({
@@ -42,5 +47,5 @@ runHookApp({
     },
   }),
   services: [serviceApollo, serviceJwt, serviceFastify],
-  features: [login]
+  features: [login, echo]
 });
