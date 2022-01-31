@@ -7,6 +7,7 @@ import { BrowserRouter,
 } from "react-router-dom";
 import UserRegister from './components/UserRegister';
 import UserLogin from './components/UserLogin';
+import InvoicesList from './components/InvoicesList';
 
 function App() {
 
@@ -32,7 +33,7 @@ function App() {
           <Routes>
             <Route path="/register" element={<UserRegister tokenState={tokenState} setTokenState={setTokenState}/>} />
             <Route path="/login" element={<UserLogin tokenState={tokenState} setTokenState={setTokenState}/>} />
-            <Route path="/invoices" element={<UserLogin tokenState={tokenState} setTokenState={setTokenState}/>} />
+            <Route path="/invoices" element={<InvoicesList tokenState={tokenState} setTokenState={setTokenState}/>} />
           </Routes>
       </BrowserRouter>
       </header>

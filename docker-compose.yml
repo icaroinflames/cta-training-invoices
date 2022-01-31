@@ -1,13 +1,21 @@
 version: "3.8"
 services:
 
-  app:
+  # app:
+  #   build:
+  #     context: ./app
+  #   volumes:
+  #     - ./app:/app
+  #   ports:
+  #     - 3000:3000
+
+  app-forrest:
     build:
-      context: ./app
+      context: ./app-forrest
     volumes:
-      - ./app:/app
+      - ./app-forrest:/app
     ports:
-      - 3000:3000
+      - 3001:3000
 
   postgres:
     image: postgres:14.1
@@ -20,7 +28,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
-
+  
   hasura:
     image: hasura/graphql-engine:v2.1.1
     depends_on:

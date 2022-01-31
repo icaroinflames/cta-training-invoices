@@ -23,7 +23,7 @@ const loginHandler = async (request, reply) => {
   }
 
   // Create Hasura user's token and send it back
-  const accessToken = await request.jwt.sign(buildUserToken(res.data.user[0].id));
+  const accessToken = await request.jwt.sign(buildUserToken(res.data.user[0].user_id));
 
   reply.send({
     // id: res.data.users[0].id,

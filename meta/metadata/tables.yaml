@@ -7,10 +7,31 @@
       check:
         user_id:
           _eq: x-hasura-user-id
+      set:
+        user_id: x-hasura-User-Id
       columns:
       - total
-      - user_id
       backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - invoice_id
+      - total
+      - created_at
+      - user_id
+      filter:
+        user_id:
+          _eq: x-hasura-user-id
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - total
+      filter:
+        user_id:
+          _eq: x-hasura-user-id
+      check: null
 - table:
     schema: public
     name: user

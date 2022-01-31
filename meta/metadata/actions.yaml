@@ -1,4 +1,9 @@
 actions:
+- name: echo
+  definition:
+    kind: ""
+    handler: http://auth:4000/echo
+  comment: echo
 - name: loginUser
   definition:
     kind: ""
@@ -10,6 +15,10 @@ custom_types:
   enums: []
   input_objects:
   - name: SampleInput
+  - name: EchoInput
+  - name: LoginInput
   objects:
+  - name: EchoOutput
   - name: SampleOutput
+  - name: LoginOutput
   scalars: []

@@ -21,14 +21,14 @@ const columns = [
     { field: "created_at", headerName: "Date", width: 150 }
 ];
 
-export default function InvoicesList() {
+export const InvoicesList = () => {
 
     const {data, loading, error } = useQuery(QUERY_GET_INVOICES);
 
     if (loading) return 'Submitting...';
     if (error) return `Submission error! ${error.message}`;
 
-    const rows = data.invoices;
+    const rows = data.invoices.reduce( (acc, cur, idx) => [...acc, {...cur, id: idx}] , [] );
 
     return (
         <div style={{ height: 300, width: "100%" }}>

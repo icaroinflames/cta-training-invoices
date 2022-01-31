@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { gql, useLazyQuery} from '@apollo/client';
 import { Link, useNavigate } from "react-router-dom";
 
-import TextInput from './customInputs/TextInput';
+import TextInput from '../customInputs/TextInput';
 
 const QUERY_LOGIN_USER = gql`
   query getUserId($email: String!, $password: String!) {
@@ -12,7 +12,7 @@ const QUERY_LOGIN_USER = gql`
   }
 `;
 
-export default function UserLogin() {
+export const UserLogin = () => {
 
   const [loginUser, {called, data, loading }] = useLazyQuery(QUERY_LOGIN_USER);
 
