@@ -25,6 +25,10 @@ export const UserLogin = () => {
 
   const navigate = useNavigate();
 
+  const token = localStorage.getItem('token');
+
+  if(token) navigate('/invoices');
+
   const handleSubmit = event => {
 
     event.preventDefault();
@@ -40,7 +44,8 @@ export const UserLogin = () => {
   if(data){
     console.log(JSON.stringify(data));
     localStorage.setItem('token', data.loginUser.accessToken);
-    navigate('/invoices')
+
+    navigate('/invoices');
   } 
   
     

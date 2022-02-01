@@ -23,7 +23,7 @@
    buildHasuraToken({
      "default-role": "user",
      "allowed-roles": ["user"],
-     "user-id": userId
+      
    });
  
  const buildApolloConfig = ({

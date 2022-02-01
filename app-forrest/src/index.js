@@ -10,7 +10,12 @@ import { authFeature } from "./features/auth";
 import { invoicesFeature } from "./features/invoices";
 
 runHookApp({
+  settings: {
+    auth:{
+      hasura_uri: 'http://localhost:8080/v1/graphql',
+    }
+  },
   services: [reactRoot, reactRouter, AuthProvider],
-  features: [appFeature, usersFeature, authFeature, invoicesFeature]
+  features: [appFeature, authFeature, invoicesFeature]
 });
 

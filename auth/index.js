@@ -32,7 +32,7 @@ runHookApp({
   settings: () => ({
     jwt: {
       secret: validatedEnv.HASURA_JWT_SECRET,
-      duration: "1h"
+      duration: "1d"
     },
     fastify: {
         port: validatedEnv.FASTIFY_PORT

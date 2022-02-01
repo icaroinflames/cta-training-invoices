@@ -18,4 +18,5 @@ export const authFeature = ({ registerAction }) => {
       element: <UserRegister />
     }
   });
+  
 };

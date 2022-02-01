@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { gql, useMutation} from '@apollo/client';
-import { Link } from "react-router-dom";
+import { UserRegisterUI } from './components/UserRegisterUI';
 
-import TextInput from '../customInputs/TextInput';
 
 const MUTATION_REGISTER_USER = gql`
     mutation registerUser($email: String!, $password: String!) {
@@ -62,17 +61,13 @@ export const UserRegister = () => {
     return (value.length > 5) && value === formState.password;
   }
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <TextInput label='Email' changeCallback={onChangeEmail}/>
-        <TextInput label='Password' changeCallback={onChangePassword}/>
-        <TextInput label='Repeat password' changeCallback={onChangePassword2}/>
-        <div>
-          <button type="submit">Register</button>
-        </div>
-        <Link to="/login">Login</Link>
-      </form>
-    </div>
-  )
+  const customProps = {
+    onChangeEmail,
+    onChangePassword,
+    onChangePassword2,
+    handleSubmit
+  }
+
+  return <UserRegisterUI {...customProps} />
+
 }
