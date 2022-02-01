@@ -31,9 +31,7 @@ const ApolloWrapper = ({ children }) => {
     )
 };
 
-export const AuthProvider = ( {registerAction} ) => {
-    registerAction({
-        hook: "$REACT_ROOT_WRAPPER",
-        handler: { component: ApolloWrapper }
-      });
+export default {
+    hook: "$REACT_ROOT_WRAPPER",
+    handler: { component: ApolloWrapper }
 }

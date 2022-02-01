@@ -2,6 +2,7 @@ import { UserLogin } from "./UserLogin";
 import { UserRegister } from "./UserRegister";
 
 export const authFeature = ({ registerAction }) => {
+  
   registerAction({
     hook: "addRoute",
     handler: {

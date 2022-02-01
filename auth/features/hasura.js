@@ -29,7 +29,7 @@
  const buildApolloConfig = ({
    endpoint = "",
    secret,
-   expiresIn = "300y",
+   expiresIn = "1d",
    role = "admin",
    roles = [],
    ...tokenConfig

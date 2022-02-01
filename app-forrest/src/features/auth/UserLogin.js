@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { gql, useLazyQuery} from '@apollo/client';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import TextInput from '../customInputs/TextInput';
+import { UserLoginUI } from './components/UserLoginUI';
 
 const QUERY_LOGIN_USER = gql`
   query getUserId($email: String!, $password: String!) {
@@ -51,18 +51,6 @@ export const UserLogin = () => {
   const onChangePassword = (value) => {
     setFormState({...formState, password: value});
   }
-
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <TextInput label='Email' changeCallback={onChangeEmail}/>
-        <TextInput label='Password' changeCallback={onChangePassword}/>        
-        <div>
-          <button type="submit">Login</button>
-        </div>
-        <Link to="/register">Register</Link>
-      </form>
-    </div>
-  );
   
+  return <UserLoginUI onChangeEmail={onChangeEmail} onChangePassword={onChangePassword} handleSubmit={handleSubmit} />
 }
