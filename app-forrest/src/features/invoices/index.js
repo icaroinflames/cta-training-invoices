@@ -1,4 +1,5 @@
 import { InvoicesList } from "./InvoicesList";
+import { InvoicesNew } from "./InvoicesNew";
 
 export const invoicesFeature = ({ registerAction }) => {
   registerAction({
@@ -6,6 +7,14 @@ export const invoicesFeature = ({ registerAction }) => {
     handler: {
       path: "/invoices",
       element: <InvoicesList />
+    }
+  });
+
+  registerAction({
+    hook: "addRoute",
+    handler: {
+      path: "/invoices/new",
+      element: <InvoicesNew />
     }
   });
 

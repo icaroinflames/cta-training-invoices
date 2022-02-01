@@ -31,9 +31,13 @@ export const InvoicesList = () => {
     const rows = data.invoices.reduce( (acc, cur, idx) => [...acc, {...cur, id: idx}] , [] );
 
     return (
-        <div style={{ height: 300, width: "100%" }}>
-          <DataGrid rows={rows} columns={columns} />
-        </div>
+        <>
+            <div style={{ height: 300, width: "100%" }}>
+                <DataGrid rows={rows} columns={columns} />          
+            </div>
+            <Link to="/invoices/new">New Invoice</Link>
+        </>
+        
       );
     
 }
