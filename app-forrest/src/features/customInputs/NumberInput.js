@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import './styles.css';
 
-export default function TextInput({ type = 'number', label }) {
+export default function NumberImput({ type = 'number', label , changeCallback}) {
   const [value, setValue] = useState('');
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     setValue(e.target.value);
+    if(typeof changeCallback === "function"){
+      changeCallback(e.target.value);
+    }
   }
 
   return (

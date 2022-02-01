@@ -1,4 +1,5 @@
 import NumberInput from '../../customInputs/NumberInput';
+import { Link } from "react-router-dom"
 
 export const InvoiceNewUI = ({handleSubmit, onChangeTotal}) => {
     return (

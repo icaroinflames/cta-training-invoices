@@ -1,9 +1,10 @@
 import { InvoiceNewUI } from "./components/InvoiceNewUI";
 import { gql, useMutation} from '@apollo/client';
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const MUTATION_INSERT_INVOICE = gql`
-    mutation registerUser($total: Number!) {
+    mutation registerUser($total: numeric!) {
         insert_invoices(objects: {total: $total}) {
         affected_rows
         }
@@ -21,29 +22,30 @@ export const InvoicesNew = () => {
 
   const [insertInvoice , {data, loading, error }] = useMutation(MUTATION_INSERT_INVOICE);
 
+  const navigate = useNavigate();
+
+  const onChangeTotal = (value) => setFormState({ ...formState, total: value });
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (formState.passwordValid) {
-      insertInvoice({
-        variables: formState,
-      });
-
-      setFormState(initialState);
-    }
+    insertInvoice({
+      variables: formState,
+    });
+    setFormState(initialState);
   };
 
   if(loading) return "loading...";
   if(error) return `Error -> ${error.message}`;
 
-  if(data && data.insert_invoice.affected_rows) {
-
-  }
-  const onChangeTotal = (value) => setFormState({ ...formState, total: value });
+  if(data){
+    console.log(data);
+    navigate('/invoices');
+  } 
 
   const customProps = {
       handleSubmit,
       onChangeTotal
   };
 
-  <InvoiceNewUI {...customProps} />
+  return <InvoiceNewUI {...customProps} />
 };
